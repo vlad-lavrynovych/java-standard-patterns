@@ -1,11 +1,9 @@
-package com.demo.patterns.zuul_api_gw;
+package com.demo.patterns.spring_cloud_gw;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 
-@EnableZuulProxy
 @EnableDiscoveryClient
 @SpringBootApplication
 public class Application {

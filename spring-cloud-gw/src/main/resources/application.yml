@@ -1,0 +1,53 @@
+server:
+  port: 9005
+spring:
+  output:
+    ansi:
+      enabled: always
+  application:
+    name: spring-cloud-gw
+  main:
+    web-application-type: reactive
+  cloud:
+    gateway:
+      routes:
+        - id: eureka
+          uri: http://localhost:8761
+          predicates:
+            - Path=/eureka/**
+          filters:
+            - RewritePath=/eureka/(?<remaining>.*), /eureka/$\{remaining}
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      x-forwarded:
+        enabled: false
+        append: false
+      actuator:
+        verbose: true
+      metrics:
+        enabled: true
+    discovery:
+      enabled: true
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      default-zone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+    healthcheck:
+      enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  metrics:
+    export:
+      prometheus:
+        enabled: true
