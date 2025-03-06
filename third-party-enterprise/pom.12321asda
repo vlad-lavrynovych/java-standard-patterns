@@ -1,0 +1,308 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
+<!--         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">-->
+<!--    <modelVersion>4.0.0</modelVersion>-->
+<!--    <parent>-->
+<!--        <groupId>com.demo.patterns</groupId>-->
+<!--        <artifactId>java-standard-patterns</artifactId>-->
+<!--        <version>1.0.0</version>-->
+<!--    </parent>-->
+
+<!--    <artifactId>third-party-enterprise</artifactId>-->
+<!--    <name>Third Party Enterprise Integration</name>-->
+<!--    <description>Module for integrating with third-party enterprise systems using Spring Boot</description>-->
+<!--    <packaging>jar</packaging>-->
+<!--    <properties>-->
+<!--        <revision>0.0.1.ado-SNAPSHOT</revision>-->
+<!--        <spring.boot.version>3.1.9</spring.boot.version>-->
+
+<!--        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>-->
+<!--        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>-->
+<!--        <java.version>17</java.version>-->
+<!--        <maven.compiler.release>${java.version}</maven.compiler.release>-->
+<!--        <maven.compiler.source>${java.version}</maven.compiler.source>-->
+<!--        <maven.compiler.target>${java.version}</maven.compiler.target>-->
+<!--        <maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>-->
+<!--        <maven-enforcer-plugin.version>3.4.1</maven-enforcer-plugin.version>-->
+<!--        <maven-enforcer-plugin.minimal.log4j.version>2.17.0</maven-enforcer-plugin.minimal.log4j.version>-->
+
+<!--        <skip.unit.tests>false</skip.unit.tests>-->
+<!--        <skipSurefire>false</skipSurefire>-->
+<!--        <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>-->
+<!--        <sonar-maven-plugin.version>3.7.0.1746</sonar-maven-plugin.version>-->
+<!--    </properties>-->
+
+<!--    <dependencyManagement>-->
+<!--        <dependencies>-->
+<!--            <dependency>-->
+<!--                <groupId>org.antlr</groupId>-->
+<!--                <artifactId>antlr4-runtime</artifactId>-->
+<!--                <version>4.13.0</version>-->
+<!--            </dependency>-->
+<!--&lt;!&ndash;            <dependency>&ndash;&gt;-->
+<!--&lt;!&ndash;                <groupId>org.apache.geronimo.specs</groupId>&ndash;&gt;-->
+<!--&lt;!&ndash;                <artifactId>geronimo-jms_2.0_spec</artifactId>&ndash;&gt;-->
+<!--&lt;!&ndash;                <version>1.0-alpha-2</version>&ndash;&gt;-->
+<!--&lt;!&ndash;            </dependency>&ndash;&gt;-->
+<!--        </dependencies>-->
+<!--    </dependencyManagement>-->
+
+<!--    <dependencies>-->
+<!--        &lt;!&ndash; Spring Boot Starter for Web Applications &ndash;&gt;-->
+<!--        &lt;!&ndash; Spring Boot Starters &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-web</artifactId>-->
+<!--            <version>${spring.boot.version}</version>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-data-jpa</artifactId>-->
+<!--            <version>${spring.boot.version}</version>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-web-services</artifactId>-->
+<!--            <version>${spring.boot.version}</version>-->
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>org.springframework.boot</groupId>-->
+<!--                    <artifactId>spring-boot-starter-web</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; Apache Camel &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.camel.springboot</groupId>-->
+<!--            <artifactId>camel-spring-boot-starter</artifactId>-->
+<!--            <version>3.20.0</version>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.apache.camel.springboot</groupId>-->
+<!--            <artifactId>camel-jms-starter</artifactId>-->
+<!--            <version>3.20.0</version>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; H2 Database for demo &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>com.h2database</groupId>-->
+<!--            <artifactId>h2</artifactId>-->
+<!--            <scope>runtime</scope>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.projectlombok</groupId>-->
+<!--            <artifactId>lombok</artifactId>-->
+<!--            <version>1.18.36</version>-->
+<!--            <scope>provided</scope>-->
+<!--        </dependency>-->
+<!--        &lt;!&ndash; Testing &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-test</artifactId>-->
+<!--            <version>${spring.boot.version}</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+<!--    </dependencies>-->
+
+<!--    <build>-->
+<!--        <finalName>${project.name}</finalName>-->
+<!--        <plugins>-->
+<!--            &lt;!&ndash; Needed to use mavens ci/cd friendly feature               &ndash;&gt;-->
+<!--            &lt;!&ndash; see https://maven.apache.org/maven-ci-friendly.html       &ndash;&gt;-->
+<!--            <plugin>-->
+<!--                <groupId>org.codehaus.mojo</groupId>-->
+<!--                <artifactId>flatten-maven-plugin</artifactId>-->
+<!--                &lt;!&ndash; Overwrite old version from parent &ndash;&gt;-->
+<!--                <version>1.2.7</version>-->
+<!--                <configuration>-->
+<!--                    <updatePomFile>true</updatePomFile>-->
+<!--                    <flattenMode>resolveCiFriendliesOnly</flattenMode>-->
+<!--                </configuration>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>flatten</id>-->
+<!--                        <phase>process-resources</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>flatten</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                    <execution>-->
+<!--                        <id>flatten.clean</id>-->
+<!--                        <phase>clean</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>clean</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+
+<!--            &lt;!&ndash; Ensure that some trivial requirements are fulfilled:-->
+<!--                    - use at least Maven 3.5, better you should use Maven 3.6-->
+<!--                      (HINT: the pipeline uses by default 3.6.x)-->
+<!--                    - use Java 17 (in this project)-->
+<!--                    - ensure that we have only one version of a dependency-->
+<!--                    - ensure that we don't use SNAPSHOT dependencies-->
+<!--                    - you should not use the Maven Release Plugin! No! No! No!-->
+<!--                    - in this example, Docker Images are our first class artifacts,-->
+<!--                      so we don't use distributionManagement-->
+<!--                      Hint: if you build a library project,-->
+<!--                            you should remove the banDistributionManagement rule-->
+<!--             &ndash;&gt;-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-enforcer-plugin</artifactId>-->
+<!--                <version>${maven-enforcer-plugin.version}</version>-->
+<!--                <dependencies>-->
+<!--                    &lt;!&ndash; Check for duplicate classes, cyclic dependencies and more  &ndash;&gt;-->
+<!--                    &lt;!&ndash; see  https://www.mojohaus.org/extra-enforcer-rules/  &ndash;&gt;-->
+<!--                    <dependency>-->
+<!--                        <groupId>org.codehaus.mojo</groupId>-->
+<!--                        <artifactId>extra-enforcer-rules</artifactId>-->
+<!--                        <version>1.7.0</version>-->
+<!--                    </dependency>-->
+<!--                </dependencies>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>enforce-requirement</id>-->
+<!--                        <goals>-->
+<!--                            <goal>enforce</goal>-->
+<!--                        </goals>-->
+<!--                        <phase>validate</phase>-->
+<!--                        <configuration>-->
+<!--                            <rules>-->
+<!--                                &lt;!&ndash;fail>true</fail&ndash;&gt;-->
+<!--                                <requireMavenVersion>-->
+<!--                                    <version>[3.8,)</version>-->
+<!--                                </requireMavenVersion>-->
+<!--                                <requireReleaseDeps>-->
+<!--                                    <message>No Snapshots Allowed!</message>-->
+<!--                                    <onlyWhenRelease>true</onlyWhenRelease>-->
+<!--                                </requireReleaseDeps>-->
+<!--                                <requireJavaVersion>-->
+<!--                                    <version>17</version>-->
+<!--                                </requireJavaVersion>-->
+<!--                                <dependencyConvergence>-->
+<!--                                </dependencyConvergence>-->
+<!--                                <bannedPlugins>-->
+<!--                                    <excludes>-->
+<!--                                        <exclude>org.apache.maven.plugin:maven-release-plugin</exclude>-->
+<!--                                    </excludes>-->
+<!--                                </bannedPlugins>-->
+<!--                                <bannedDependencies>-->
+<!--                                    <excludes>-->
+<!--                                        <exclude>org.apache.logging.log4j:log4j-core:(,${maven-enforcer-plugin.minimal.log4j.version})-->
+<!--                                        </exclude>-->
+<!--                                    </excludes>-->
+<!--                                </bannedDependencies>-->
+<!--                                <banDistributionManagement/>-->
+<!--                                <reactorModuleConvergence/>-->
+<!--                                &lt;!&ndash; Extra rules                 &ndash;&gt;-->
+<!--                                <banDuplicatePomDependencyVersions>-->
+
+<!--                                </banDuplicatePomDependencyVersions>-->
+<!--                                <banCircularDependencies/>-->
+<!--                                <banDuplicateClasses>-->
+<!--                                    <ignoreClasses>-->
+<!--                                        <ignoreClass>javax.jms.*</ignoreClass>-->
+<!--                                        <ignoreClass>javax.annotation.*</ignoreClass>-->
+<!--                                        <ignoreClass>io.swagger.v3.oas.annotations.*</ignoreClass>-->
+<!--                                    </ignoreClasses>-->
+<!--                                    <scopes>-->
+<!--                                        <scope>compile</scope>-->
+<!--                                        <scope>provided</scope>-->
+<!--                                    </scopes>-->
+<!--                                    <findAllDuplicates>true</findAllDuplicates>-->
+<!--                                    <ignoreWhenIdentical>true</ignoreWhenIdentical>-->
+<!--                                </banDuplicateClasses>-->
+<!--                                <enforceBytecodeVersion>-->
+<!--                                    <maxJdkVersion>${java.version}</maxJdkVersion>-->
+<!--                                </enforceBytecodeVersion>-->
+<!--                            </rules>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-surefire-plugin</artifactId>-->
+<!--                <version>${maven-surefire-plugin.version}</version>-->
+<!--                <configuration>-->
+<!--                    <skip>${skipSurefire}</skip>-->
+<!--                    <skipTests>${skip.unit.tests}</skipTests>-->
+<!--                    <includes>-->
+<!--                        <include>**/*Test.java</include>-->
+<!--                        <include>**/*IT.java</include>-->
+<!--                    </includes>-->
+<!--                </configuration>-->
+<!--                <dependencies>-->
+<!--                    <dependency>-->
+<!--                        <groupId>org.apache.maven.surefire</groupId>-->
+<!--                        <artifactId>surefire-junit-platform</artifactId>-->
+<!--                        <version>${maven-surefire-plugin.version}</version>-->
+<!--                    </dependency>-->
+<!--                </dependencies>-->
+<!--            </plugin>-->
+
+<!--            <plugin>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--                <version>${spring.boot.version}</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <goals>-->
+<!--                            <goal>repackage</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+
+<!--            <plugin>-->
+<!--                <groupId>org.jacoco</groupId>-->
+<!--                <artifactId>jacoco-maven-plugin</artifactId>-->
+<!--                <version>${jacoco-maven-plugin.version}</version>-->
+<!--                <configuration>-->
+<!--                    <destFile>${basedir}/target/coverage-reports/jacoco-unit.exec</destFile>-->
+<!--                    <dataFile>${basedir}/target/coverage-reports/jacoco-unit.exec</dataFile>-->
+<!--                    <output>file</output>-->
+<!--                    <append>true</append>-->
+<!--                </configuration>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>jacoco-initialize</id>-->
+<!--                        <goals>-->
+<!--                            <goal>prepare-agent</goal>-->
+<!--                        </goals>-->
+<!--                        <phase>test-compile</phase>-->
+<!--                    </execution>-->
+<!--                    <execution>-->
+<!--                        <id>jacoco-site</id>-->
+<!--                        <phase>verify</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>report</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-compiler-plugin</artifactId>-->
+<!--                <configuration>-->
+<!--                    <annotationProcessorPaths>-->
+<!--                        <path>-->
+<!--                            <groupId>org.projectlombok</groupId>-->
+<!--                            <artifactId>lombok</artifactId>-->
+<!--                            <version>1.18.36</version>-->
+<!--                        </path>-->
+<!--                    </annotationProcessorPaths>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--        <directory>target</directory>-->
+<!--    </build>-->
+
+<!--</project>-->

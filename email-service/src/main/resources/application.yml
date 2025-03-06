@@ -1,0 +1,38 @@
+server:
+  port: 0 # 0 means random port
+
+spring:
+  output:
+    ansi:
+      enabled: always
+  application:
+    name: email-service
+    
+  mail:
+    host: localhost
+    port: 1025
+    
+  cloud:
+    discovery:
+      enabled: true
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      default-zone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+    healthcheck:
+      enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  metrics:
+    export:
+      prometheus:
+        enabled: true

@@ -1,0 +1,40 @@
+server:
+  port: 9005
+
+spring:
+  output:
+    ansi:
+      enabled: always
+  application:
+    name: zuul-api-gw
+  cloud:
+    discovery:
+      enabled: true
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      default-zone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+    healthcheck:
+      enabled: true
+      
+zuul:
+  routes:
+  # No need to specify individual routes; Zuul will forward based on service names
+  # Example: Requests to /service1 will be forwarded to the service registered in Eureka as 'service1'
+  # (Zuul will automatically resolve it using Eureka)
+  ignored-services: '*'  # Optional: Zuul should not ignore any services by default
+  
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  metrics:
+    export:
+      prometheus:
+        enabled: true

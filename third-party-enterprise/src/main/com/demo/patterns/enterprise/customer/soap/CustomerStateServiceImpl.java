@@ -13,7 +13,7 @@ public class CustomerStateServiceImpl implements CustomerStateService {
     @Override
     public String changeCustomerState(Long customerId, String newState) {
         Task task = new Task();
-        task.setStatus("QUEUED");
+//        task.setStatus("QUEUED");
         taskRepository.save(task);
         return "Task queued to change state of customer ID " + customerId;
     }
